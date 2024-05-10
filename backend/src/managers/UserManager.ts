@@ -42,6 +42,7 @@ export class UserManager {
         }
 
         const room = this.rooManager.createRoom(user1,user2);
+        this.clearQueue();
     }
 
     initHandler(socket:Socket){
