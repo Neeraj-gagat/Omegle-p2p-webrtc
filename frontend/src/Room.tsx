@@ -12,7 +12,7 @@ export const Room = () => {
 
     useEffect(() => {
         // logic to init user to the room
-        const socket = io(URL)
+        const socket = io(URL);
         socket.on("send-offer", (roomId) => {
             alert('send-offer-please');
             setLobby(false);
@@ -25,8 +25,8 @@ export const Room = () => {
             alert('send-aswer-please');
             setLobby(false);
             socket.emit('answer', {
-                sdp:"",
-                roomId
+                roomId,
+                sdp:""
             })
         });
         socket.on("answer", (roomId, answer) => {

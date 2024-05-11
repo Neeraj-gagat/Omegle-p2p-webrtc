@@ -44,6 +44,8 @@ export class UserManager {
 
         const user1 = this.users.find(x => x.socket.id === id1);
         const user2 = this.users.find(x => x.socket.id === id2);
+        console.log(user1)
+        console.log(user2)
         
         if(!user1 || !user2){
             return
@@ -57,12 +59,10 @@ export class UserManager {
 
     initHandler(socket:Socket){
         socket.on("offer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
-            console.log("offer rceived")
             this.rooManager.onOffer(roomId,sdp);
         })
 
         socket.on("answer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
-            console.log("amswer rceived")
             this.rooManager.onAnswer(roomId,sdp);
         })
     }
