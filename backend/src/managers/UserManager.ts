@@ -11,12 +11,12 @@ export interface User{
 export class UserManager {
     private users: User[];
     private queue: string[];
-    private rooManager: RoomManager;
+    private roomManager: RoomManager;
     
     constructor(){
         this.users = [];
         this.queue = [];
-        this.rooManager = new RoomManager();
+        this.roomManager = new RoomManager();
     }
     addUser(name:string, socket: Socket){
         this.users.push({
@@ -25,7 +25,7 @@ export class UserManager {
         this.queue.push(socket.id);
         socket.send("lobby");
         this.clearQueue()
-        this.initHandler(socket)
+        this.initHandlers(socket)
     }
     removeUser(socketId:string){
         const user = this.users.find(x => x.socket.id === socketId);
@@ -34,18 +34,15 @@ export class UserManager {
     }
 
     clearQueue(){
-        console.log("inside clear queue")
-        console.log(this.queue.length)
         if (this.queue.length < 2) {
             return;
         }
-        const id1 = this.queue.pop()
-        const id2 = this.queue.pop()
+        const id1 = this.queue.pop();
+        const id2 = this.queue.pop();
+        // console.log("id is " +  id1 + " " + id2)
 
         const user1 = this.users.find(x => x.socket.id === id1);
         const user2 = this.users.find(x => x.socket.id === id2);
-        console.log(user1)
-        console.log(user2)
         
         if(!user1 || !user2){
             return
@@ -53,17 +50,17 @@ export class UserManager {
 
         console.log("creating room");
 
-        const room = this.rooManager.createRoom(user1,user2);
+        const room = this.roomManager.createRoom(user1,user2);
         this.clearQueue();
     }
 
-    initHandler(socket:Socket){
+    initHandlers(socket:Socket){
         socket.on("offer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
-            this.rooManager.onOffer(roomId,sdp);
+            this.roomManager.onOffer(roomId,sdp);
         })
 
         socket.on("answer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
-            this.rooManager.onAnswer(roomId,sdp);
+            this.roomManager.onAnswer(roomId,sdp);
         })
     }
 

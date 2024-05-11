@@ -24,9 +24,8 @@ export class RoomManager {
         })
     }
 
-    onOffer(roomId:string, sdp: string){
+    onOffer(roomId: string, sdp: string){
         const user2 = this.rooms.get(roomId)?.user2;
-        console.log("user2 is " + user2)
         user2?.socket.emit("offer",{
             sdp,
             roomId
@@ -35,7 +34,6 @@ export class RoomManager {
 
     onAnswer(roomId: string,sdp: string){
         const user1 = this.rooms.get(roomId)?.user1;
-        console.log("user1 is " + user1)
         user1?.socket.emit("answer",{
             sdp,
             roomId

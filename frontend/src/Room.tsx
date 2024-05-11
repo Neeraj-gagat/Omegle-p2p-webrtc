@@ -29,7 +29,7 @@ export const Room = () => {
                 sdp:""
             })
         });
-        socket.on("answer", (roomId, answer) => {
+        socket.on("answer", ({roomId, answer}) => {
             setLobby(false);
             alert('connection done');
         });
