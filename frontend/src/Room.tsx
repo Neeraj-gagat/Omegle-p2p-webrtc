@@ -45,7 +45,8 @@ export const Room = ({
                 if (e.candidate) {
                     socket.emit("add-ice-candidate", {
                         candidate: e.candidate,
-                        type:"sender"
+                        type:"sender",
+                        roomId
                     })   
                 }
             }
@@ -79,11 +80,12 @@ export const Room = ({
             setReceivingPc(pc);
 
             pc.onicecandidate = async (e) => {
-                console.log("icwe candidate on recevied offer")
+                console.log("ice candidate on recevied offer")
                 if (e.candidate) {
                     socket.emit("add-ice-candidate", {
                         candidate: e.candidate,
-                        type: "receiver"
+                        type: "receiver",
+                        roomId
                     })   
                 }
             }
@@ -125,7 +127,7 @@ export const Room = ({
                     return pc
                 })
             }else{
-                setReceivingPc(pc => {
+                setSendingPc(pc => {
                     pc?.addIceCandidate(candidate)
                     return pc
                 })
