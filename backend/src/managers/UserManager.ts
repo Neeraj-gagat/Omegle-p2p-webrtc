@@ -34,6 +34,8 @@ export class UserManager {
     }
 
     clearQueue(){
+        console.log("inside clear queue")
+        console.log(this.queue.length)
         if (this.queue.length < 2) {
             return;
         }
@@ -61,6 +63,10 @@ export class UserManager {
 
         socket.on("answer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
             this.roomManager.onAnswer(roomId,sdp);
+        })
+
+        socket.on("add-ice-candidate", ({candidate, roomId, type}) => {
+            this.roomManager.onIceCandidates(roomId, socket.id, candidate, type)
         })
     }
 

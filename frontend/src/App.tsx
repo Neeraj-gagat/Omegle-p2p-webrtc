@@ -12,7 +12,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Landing/>} />
-      <Room/>
       </Routes>
     </BrowserRouter>
   )

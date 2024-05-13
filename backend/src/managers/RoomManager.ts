@@ -22,10 +22,15 @@ export class RoomManager {
         user1.socket.emit("send-offer", {
             roomId
         })
+        user2.socket.emit("send-offer", {
+            roomId
+        })
     }
 
     onOffer(roomId: string, sdp: string){
         const user2 = this.rooms.get(roomId)?.user2;
+        console.log("on offer")
+        console.log("user2 is " + user2)
         user2?.socket.emit("offer",{
             sdp,
             roomId
@@ -34,10 +39,21 @@ export class RoomManager {
 
     onAnswer(roomId: string,sdp: string){
         const user1 = this.rooms.get(roomId)?.user1;
+        console.log("on answer")
+        console.log("user1 is " + user1)
         user1?.socket.emit("answer",{
             sdp,
             roomId
         });
+    }
+
+    onIceCandidates(roomId: string, senderSocketid:string, candidate:any, type: "sender" |"receiver"){
+        const room = this.rooms.get(roomId);
+        if (!room){
+            return;
+        }
+        const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
+        receivingUser.socket.send("add-ice-candidate", ({candidate, type}));
     }
 
     generate() {

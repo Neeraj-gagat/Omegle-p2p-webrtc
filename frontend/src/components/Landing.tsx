@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom";
+import { Room } from "../Room";
 
 export const Landing = () => {
     const [name, setName ] = useState("");
@@ -30,13 +31,20 @@ export const Landing = () => {
         }
     }, [videoRef]);
 
-    return <div>
-        <video ref={videoRef}></video>
-        <input type="text" onChange={(e) => {
-            setName(e.target.value);
-        }} >
+    if (!joined) {
+        return <div>
+            <video width={500} autoPlay ref={videoRef}></video>
+            <input type="text" onChange={(e) => {
+                setName(e.target.value);
+            }} >
 
-        </input>
-        <Link to={`/room/?name=${name}`}>join </Link>
-    </div>
+            </input>
+            <button onClick={() => {
+                setJoined(true)
+            }}>join </button>
+        </div>    
+    }
+
+    return<Room name={name} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} ></Room>
+    
 }
