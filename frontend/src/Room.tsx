@@ -29,6 +29,7 @@ export const Room = ({
         // logic to init user to the room
         const socket = io(URL);
         socket.on("send-offer",async ({roomId}) => {
+            console.log("sending offer")
             setLobby(false);
             const pc = new RTCPeerConnection();
             setSendingPc(pc);
@@ -40,6 +41,7 @@ export const Room = ({
             }
         
             pc.onicecandidate = async (e) => {
+                console.log("receving ice candidate locally")
                 if (e.candidate) {
                     socket.emit("add-ice-candidate", {
                         candidate: e.candidate,
@@ -49,25 +51,25 @@ export const Room = ({
             }
 
             pc.onnegotiationneeded =async () => {
-                setTimeout( async() => {
-                    const sdp = await pc.createOffer();
+                console.log("on negotiation needed")
+                const sdp = await pc.createOffer();
                 // @ts-ignore
-                pc.setLocalDescription(sdp.sdp)
+                pc.setLocalDescription(sdp)
                 socket.emit('offer', {
                     sdp,
                     roomId
                 })
-                }, 2000);
             }
         });
 
         socket.on("offer",async ({roomId, sdp: remotesdp}) => {
+            console.log("recevied offer")
             setLobby(false);
             const pc = new RTCPeerConnection();
             pc.setRemoteDescription(remotesdp)
             const sdp = await pc.createAnswer();
             // @ts-ignore
-            pc.setLocalDescription(sdp.sdp)
+            pc.setLocalDescription(sdp)
             const stream = new MediaStream();
             if (remoteVideoRef.current) {
                 remoteVideoRef.current.srcObject = stream;    
@@ -77,6 +79,7 @@ export const Room = ({
             setReceivingPc(pc);
 
             pc.onicecandidate = async (e) => {
+                console.log("icwe candidate on recevied offer")
                 if (e.candidate) {
                     socket.emit("add-ice-candidate", {
                         candidate: e.candidate,
@@ -107,12 +110,15 @@ export const Room = ({
                 pc?.setRemoteDescription(remotesdp)
                 return pc
             })
+            console.log("loop closed");
         });
         socket.on("lobby", () => {
             setLobby(true);
         })
 
         socket.on("add-ice-candidate", ({candidate, type}) => {
+            console.log("add ice candidate from remote")
+            console.log(candidate, type)
             if (type == "sender") {
                 setReceivingPc(pc => {
                     pc?.addIceCandidate(candidate)
