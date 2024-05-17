@@ -22,8 +22,8 @@ export const Room = ({
     const [remoteVideoTrack, setRemoteVideoTrack] = useState<MediaStreamTrack | null>(null);
     const [remoteAudioTrack, setRemoteAudioTrack] = useState<MediaStreamTrack | null>(null);
     const [remoteMediaStream, setRemoteMediaStream] = useState<MediaStream | null>(null);
-    const remoteVideoRef = useRef<HTMLVideoElement>();
-    const localVideoRef = useRef<HTMLVideoElement>();
+    const remoteVideoRef = useRef<HTMLVideoElement>(null);
+    const localVideoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         // logic to init user to the room
@@ -78,6 +78,7 @@ export const Room = ({
             setRemoteMediaStream(stream);
             // trickle ice
             setReceivingPc(pc);
+            // @ts-ignore
             window.pcr = pc;
 
             pc.ontrack = (e) => {
@@ -182,10 +183,20 @@ export const Room = ({
     },[localVideoRef])
 
    
-    return <div>
-        Hi {name}
-        <video autoPlay width={400} height={400} ref={localVideoRef}/>
-        {lobby ? "waiting to conect you to someone" : null}
-        <video autoPlay width={400} height={400} ref={remoteVideoRef}/>
+    return <div className="bg-slate-100 h-screen">
+        <header className="bg-blue-400 text-white p-4">
+                <div className="container mx-auto flex justify-between items-center">
+                    <div className="flex items-center space-x-4">
+                    {/* <img src="logo.png" alt="Logo" className="h-8 w-8"> */}
+                    <h1 className="text-xl font-bold">OMEGLE</h1>
+                    </div>
+                </div>
+            </header>
+        <div className="text-blue-400  text-2xl"> Hi {name}  </div>
+        <video className="rounded-lg h-auto" autoPlay width={400} height={400} ref={localVideoRef}/>
+        <div className="text-blue-400 text-2xl">
+        {lobby ? "waiting to conect you to someone........." : null}
+        </div>
+        <video className="rounded-lg h-auto" autoPlay width={400} height={400} ref={remoteVideoRef}/>
     </div>
 }
