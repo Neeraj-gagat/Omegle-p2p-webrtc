@@ -32,7 +32,7 @@ export const Landing = () => {
     }, [videoRef]);
 
     if (!joined) {
-        return <div className="bg-slate-100 h-screen">
+        return <div className="bg-slate-200 flex flex-col min-h-screen">
             <header className="bg-blue-400 text-white p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-4">
@@ -42,7 +42,7 @@ export const Landing = () => {
                 </div>
             </header>
             <div className="flex justify-center">
-                <video className="rounded-lg h-auto" autoPlay ref={videoRef}></video>
+                <video className="rounded-xl h-10 " autoPlay ref={videoRef}></video>
             </div>
             <div className="flex flex-col justify-center items-center">
             <input
@@ -57,7 +57,7 @@ export const Landing = () => {
                 setJoined(true)
             }}>join </button>
             </div>
-            
+            <footer className="mt-auto bg-blue-400">footer</footer>
         </div>    
     }
 
