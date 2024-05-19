@@ -7,7 +7,7 @@ import {Server} from "socket.io";
 import { UserManager } from "./managers/UserManager";
 
 const app  = express();
-const server = http.createServer(http);
+const server = http.createServer(app);
 
 const io = new Server(server, {
     cors:{
@@ -25,6 +25,9 @@ io.on('connection', (socket: Socket) => {
         userManager.removeUser(socket.id);
     })
 });
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+  });
 
 server.listen(3000, () => [
     console.log('listening on *:3000')
