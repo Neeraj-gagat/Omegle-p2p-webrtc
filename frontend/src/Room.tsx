@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
 const URL = "https://omegle-p2p-webrtc.onrender.com/";
@@ -13,7 +12,6 @@ export const Room = ({
     localAudioTrack: MediaStreamTrack | null,
     localVideoTrack: MediaStreamTrack | null
 }) => {
-    const [searchParams, setSearchParams] = useSearchParams();
     // const name = searchParams.get("name");
     const [lobby, setLobby] = useState(true);
     const [socket, setSocket] = useState<null | Socket>(null);
@@ -81,7 +79,7 @@ export const Room = ({
             // @ts-ignore
             window.pcr = pc;
 
-            pc.ontrack = (e) => {
+            pc.ontrack = () => {
                 alert("on track")
                 // console.error("inside ontrack")
                 // const {track,type} = e;
@@ -132,9 +130,9 @@ export const Room = ({
                 // @ts-ignore
                 remoteVideoRef.current.srcObject.addTrack(track2)
                 remoteVideoRef.current?.play()
-            }, 5000);
+            }, 3000);
         });
-        socket.on("answer", ({roomId, sdp: remotesdp}) => {
+        socket.on("answer", ({sdp: remotesdp}) => {
             setLobby(false);
             setSendingPc(pc => {
                 pc?.setRemoteDescription(remotesdp)
@@ -153,9 +151,10 @@ export const Room = ({
                 setReceivingPc(pc => {
                     if (!pc) {
                         console.error("Receiving pc not found")
-                    }else {
-                        console.error(pc.ontrack)
                     }
+                    // else {
+                    //     console.error(pc.ontrack)
+                    // }
                     pc?.addIceCandidate(candidate)
                     return pc;
                 });
@@ -200,6 +199,6 @@ export const Room = ({
             </div>
             <video className="rounded-lg h-auto" autoPlay width={400} height={400} ref={remoteVideoRef}/>
         </div>
-        <footer className="mt-auto bg-blue-400">footer</footer>
+        <footer className="mt-auto flex min-h-screen flex-col  bg-blue-400">footer</footer>
     </div>
 }
