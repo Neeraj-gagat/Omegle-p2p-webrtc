@@ -41,7 +41,7 @@ export const Landing = () => {
                 </div>
             </header>
             <div className="flex justify-center">
-                <video className="rounded-xl h-10 " autoPlay ref={videoRef}></video>
+                <video className="rounded-xl" width={300} height={300} autoPlay ref={videoRef}></video>
             </div>
             <div className="flex flex-col justify-center items-center">
             <input
@@ -56,7 +56,7 @@ export const Landing = () => {
                 setJoined(true)
             }}>join </button>
             </div>
-            <footer className="mt-auto bg-blue-400">footer</footer>
+            <footer className="mt-auto flex flex-col bg-blue-400"></footer>
         </div>    
     }
 

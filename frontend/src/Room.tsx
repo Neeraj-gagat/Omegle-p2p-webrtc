@@ -182,7 +182,7 @@ export const Room = ({
     },[localVideoRef])
 
    
-    return <div className="bg-slate-100 h-screen">
+    return <div className="bg-slate-100 grid grid-rows-[auto_1fr_auto] h-screen">
         <header className="bg-blue-400 text-white p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-4">
@@ -193,12 +193,12 @@ export const Room = ({
             </header>
         <div className="text-blue-400  text-2xl"> Hi {name}  </div>
         <div className="ml-5">
-            <video className="rounded-xl h-auto" autoPlay width={400} height={400} ref={localVideoRef}/>
+            <video className="rounded-xl" autoPlay width={300} height={300} ref={localVideoRef}/>
             <div className="text-blue-400 text-2xl">
             {lobby ? "waiting to conect you to someone........." : null}
             </div>
-            <video className="rounded-lg h-auto" autoPlay width={400} height={400} ref={remoteVideoRef}/>
+            <video className="rounded-xl " autoPlay width={300} height={300} ref={remoteVideoRef}/>
         </div>
-        <footer className="mt-auto flex min-h-screen flex-col  bg-blue-400">footer</footer>
+        <footer className="mt-auto flex flex-col bg-blue-400"></footer>
     </div>
 }
