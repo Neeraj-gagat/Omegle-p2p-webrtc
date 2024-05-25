@@ -41,7 +41,7 @@ export const Landing = () => {
                 </div>
             </header>
             <div className="flex justify-center">
-                <video className="rounded-xl" width={300} height={300} autoPlay ref={videoRef}></video>
+                <video className="rounded-xl" width={250} height={250} autoPlay ref={videoRef}></video>
             </div>
             <div className="flex flex-col justify-center items-center">
             <input

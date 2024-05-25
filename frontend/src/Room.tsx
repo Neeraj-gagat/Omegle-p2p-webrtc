@@ -192,12 +192,12 @@ export const Room = ({
                 </div>
             </header>
         <div className="text-blue-400  text-2xl"> Hi {name}  </div>
-        <div className="ml-5">
-            <video className="rounded-xl" autoPlay width={300} height={300} ref={localVideoRef}/>
+        <div className="ml-5 h-screen ">
+            <video className="rounded-xl" autoPlay width={250} height={250} ref={localVideoRef}/>
             <div className="text-blue-400 text-2xl">
             {lobby ? "waiting to conect you to someone........." : null}
             </div>
-            <video className="rounded-xl " autoPlay width={300} height={300} ref={remoteVideoRef}/>
+            <video className=" mt-2 rounded-xl " autoPlay width={250} height={250} ref={remoteVideoRef}/>
         </div>
         <footer className="mt-auto flex flex-col bg-blue-400"></footer>
     </div>
